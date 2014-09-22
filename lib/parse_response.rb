@@ -17,13 +17,8 @@ class HTTPResponseParser
   end
 
   def header
-    header_hash = {}
-    header_array = @file.split("\n\n")[0].split(/\n/)[1..-1]
-    header_array.each do |line|
-      split_line = line.split(': ')
-      header_hash[split_line[0] + ':'] = split_line[1]
-    end
-    header_hash
+    header = @file.split("\n\n")[0].split(/\n/)[1..-1].map { |line| [line.split(": ")[0] + ":", line.split(": ")[1]] }
+    Hash[header]
   end
 
   def content_type
